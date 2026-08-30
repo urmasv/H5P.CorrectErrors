@@ -1,0 +1,34 @@
+{
+  "title": "Correct Errors",
+  "machineName": "H5P.CorrectErrors",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 68,
+  "runnable": 1,
+  "author": "UrmasV",
+  "license": "MIT",
+  "embedTypes": [
+    "iframe"
+  ],
+  "preloadedJs": [
+    {
+      "path": "js/correct-errors.js"
+    }
+  ],
+  "preloadedCss": [
+    {
+      "path": "css/correct-errors.css"
+    }
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.CorrectErrorsMarkerLabel",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ],
+  "coreApi": {
+    "majorVersion": 1,
+    "minorVersion": 24
+  }
+}

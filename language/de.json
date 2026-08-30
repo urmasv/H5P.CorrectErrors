@@ -1,0 +1,264 @@
+{
+  "semantics": [
+    {
+      "name": "taskDescription",
+      "type": "text",
+      "widget": "html",
+      "label": "Anweisung für Lernende",
+      "importance": "high",
+      "default": "Korrigiere den Text. Ersetze, lösche oder ergänze Text, wenn nötig.",
+      "optional": true,
+      "tags": [
+        "p",
+        "br",
+        "strong",
+        "em",
+        "u",
+        "ul",
+        "ol",
+        "li",
+        "a",
+        "span",
+        "sub",
+        "sup"
+      ]
+    },
+    {
+      "name": "correctText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Richtiger Text",
+      "importance": "high",
+      "default": "Hallo, [Welt]! Kannst du [Leerzeichen] einfügen?",
+      "description": "Gib den richtigen Text ein. Verwende Marker, um bewertete Inhalte zu kennzeichnen, z. B. [Antwort], [Antwort|Alternative] oder [!!] für eine leere richtige Antwort. Die Markersymbole zählen nicht zur richtigen Antwort."
+    },
+    {
+      "name": "wrongText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Text mit Fehlern für Lernende",
+      "importance": "high",
+      "default": "Hallo, [Welt] Kannst du [Leerzeichen] einfügen?",
+      "optional": true
+    },
+    {
+      "name": "specialCharacters",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Zusätzliche Zeichen",
+      "importance": "high",
+      "default": "",
+      "optional": true,
+      "description": "Gib Zeichen ein, die Lernende über Schaltflächen oberhalb des Antwortbereichs einfügen können. Trenne die Zeichen durch Leerzeichen, Kommas oder Zeilenumbrüche."
+    },
+    {
+      "name": "scoreMode",
+      "type": "select",
+      "label": "Bewertungsart",
+      "importance": "high",
+      "default": "fulltext",
+      "description": "Beim gesamten Text wird der endgültige Text der Lernenden mit dem vollständigen richtigen Text verglichen, nachdem die Marker entfernt wurden. Inhalt zwischen Markern bewertet nur die Teile innerhalb der ausgewählten Markersymbole.",
+      "options": [
+        {
+          "value": "fulltext",
+          "label": "Gesamter Text"
+        },
+        {
+          "value": "marked",
+          "label": "Inhalt zwischen Markern [ ]"
+        }
+      ]
+    },
+    {
+      "name": "showEvaluatedParts",
+      "type": "boolean",
+      "label": "Bewertete Teile mit hellblauem Hintergrund anzeigen",
+      "description": "Zeigt den Inhalt zwischen den ausgewählten Markern in der Lernendenansicht vor der Überprüfung mit hellblauem Hintergrund an.",
+      "default": false
+    },
+    {
+      "name": "behaviour",
+      "type": "group",
+      "label": "Verhaltenseinstellungen",
+      "importance": "low",
+      "fields": [
+        {
+          "name": "delimiters",
+          "type": "select",
+          "label": "Marker",
+          "description": "Dropdown zur Auswahl des Markerpaares. Die bewertete Antwort wird zwischen die ausgewählten Marker geschrieben.",
+          "default": "[]",
+          "options": [
+            {
+              "value": "[]",
+              "label": "[ ]  –  [Antwort]"
+            },
+            {
+              "value": "{}",
+              "label": "{ }  –  {Antwort}"
+            },
+            {
+              "value": "##",
+              "label": "# #  –  #Antwort#"
+            },
+            {
+              "value": "@@",
+              "label": "@ @  –  @Antwort@"
+            },
+            {
+              "value": "*",
+              "label": "* *  –  *Antwort*"
+            }
+          ]
+        },
+        {
+          "name": "optionSeparator",
+          "type": "text",
+          "label": "Trennzeichen für alternative Antworten",
+          "description": "Verwende es innerhalb einer markierten Antwort, z. B. [Katze|Hund].",
+          "default": "|",
+          "maxLength": 4,
+          "widget": "textarea"
+        },
+        {
+          "name": "enableRetry",
+          "type": "boolean",
+          "label": "Erneutes Versuchen erlauben",
+          "default": true
+        },
+        {
+          "name": "showCorrectTextAfterCheck",
+          "type": "boolean",
+          "label": "Richtigen Text nach der Überprüfung anzeigen",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "l10n",
+      "type": "group",
+      "label": "Texte und Übersetzungen",
+      "importance": "low",
+      "common": true,
+      "fields": [
+        {
+          "name": "checkAnswer",
+          "type": "text",
+          "label": "Text der Prüfen-Schaltfläche",
+          "default": "Prüfen"
+        },
+        {
+          "name": "tryAgain",
+          "type": "text",
+          "label": "Text der Erneut-versuchen-Schaltfläche",
+          "default": "Erneut versuchen"
+        },
+        {
+          "name": "correct",
+          "type": "text",
+          "label": "Text für richtige Rückmeldung",
+          "default": "Richtig"
+        },
+        {
+          "name": "incorrect",
+          "type": "text",
+          "label": "Text für falsche Rückmeldung",
+          "default": "Falsch"
+        },
+        {
+          "name": "correctFeedback",
+          "type": "text",
+          "label": "Rückmeldung bei vollständig richtiger Antwort",
+          "default": "Alles richtig!"
+        },
+        {
+          "name": "correctText",
+          "type": "text",
+          "label": "Text für richtige Anzahl",
+          "default": "Richtig: @count",
+          "description": "Verfügbare Variable: @count."
+        },
+        {
+          "name": "wrongText",
+          "type": "text",
+          "label": "Text für falsche Anzahl",
+          "default": "Falsch: @count",
+          "description": "Verfügbare Variable: @count."
+        },
+        {
+          "name": "missingCountText",
+          "type": "text",
+          "label": "Text für fehlende Anzahl",
+          "default": "Fehlend: @count",
+          "description": "Verfügbare Variable: @count."
+        },
+        {
+          "name": "yourResult",
+          "type": "text",
+          "label": "Ergebnistext",
+          "default": "Ergebnis: @score / @max",
+          "description": "Verfügbare Variablen: @score und @max."
+        },
+        {
+          "name": "emptyContent",
+          "type": "text",
+          "label": "Meldung bei leerem Inhalt",
+          "default": "Die Autorin/der Autor hat keinen Text hinzugefügt."
+        },
+        {
+          "name": "solutionPrefix",
+          "type": "text",
+          "label": "Präfix für richtige Antwort",
+          "default": "Richtige Antwort:"
+        },
+        {
+          "name": "dragHint",
+          "type": "text",
+          "label": "Hinweis zum Ziehen",
+          "default": ""
+        },
+        {
+          "name": "selectPlaceholder",
+          "type": "text",
+          "label": "Dropdown-Platzhalter",
+          "default": "wählen..."
+        },
+        {
+          "name": "emptyGap",
+          "type": "text",
+          "label": "Bezeichnung für leere Antwort",
+          "default": "leer"
+        },
+        {
+          "name": "gapLabel",
+          "type": "text",
+          "label": "Barrierefreie Bezeichnung der Lücke",
+          "default": "Antwortfeld @num",
+          "description": "Die Variable @num wird durch die Nummer der Lücke ersetzt."
+        },
+        {
+          "name": "editableLabel",
+          "type": "text",
+          "label": "Barrierefreie Bezeichnung des bearbeitbaren Texts",
+          "default": "Bearbeitbarer Antworttext"
+        },
+        {
+          "name": "extraText",
+          "type": "text",
+          "label": "Bezeichnung für zusätzlichen Text",
+          "default": "Zusätzlicher Text"
+        },
+        {
+          "name": "missingText",
+          "type": "text",
+          "label": "Bezeichnung für fehlenden Text",
+          "default": "Fehlender Text"
+        }
+      ]
+    }
+  ],
+  "libraryStrings": {
+    "title": "Fehler korrigieren",
+    "description": "Lernende korrigieren Fehler direkt in einem Text."
+  }
+}

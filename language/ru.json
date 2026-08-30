@@ -1,0 +1,264 @@
+{
+  "semantics": [
+    {
+      "name": "taskDescription",
+      "type": "text",
+      "widget": "html",
+      "label": "Инструкция для учащегося",
+      "importance": "high",
+      "default": "Исправьте текст. При необходимости замените, удалите или добавьте текст.",
+      "optional": true,
+      "tags": [
+        "p",
+        "br",
+        "strong",
+        "em",
+        "u",
+        "ul",
+        "ol",
+        "li",
+        "a",
+        "span",
+        "sub",
+        "sup"
+      ]
+    },
+    {
+      "name": "correctText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Правильный текст",
+      "importance": "high",
+      "default": "Привет, [мир]! Можете добавить [пробелы]?",
+      "description": "Введите правильный текст. Для выделения оцениваемого содержания используйте маркеры, например [ответ], [ответ|вариант] или [!!] для пустого правильного ответа. Символы маркеров не считаются частью правильного ответа."
+    },
+    {
+      "name": "wrongText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Текст с ошибками для учащегося",
+      "importance": "high",
+      "default": "Привет, [мир] Можете добавить [пробел]?",
+      "optional": true
+    },
+    {
+      "name": "specialCharacters",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Дополнительные символы",
+      "importance": "high",
+      "default": "",
+      "optional": true,
+      "description": "Введите символы, которые учащийся сможет вставлять кнопками над областью ответа. Разделяйте символы пробелами, запятыми или переносами строк."
+    },
+    {
+      "name": "scoreMode",
+      "type": "select",
+      "label": "Способ оценивания",
+      "importance": "high",
+      "default": "fulltext",
+      "description": "При выборе всего текста итоговый текст учащегося сравнивается со всем правильным текстом после удаления маркеров. Текст между маркерами оценивает только части внутри выбранных символов маркеров.",
+      "options": [
+        {
+          "value": "fulltext",
+          "label": "Весь текст"
+        },
+        {
+          "value": "marked",
+          "label": "Текст между маркерами [ ]"
+        }
+      ]
+    },
+    {
+      "name": "showEvaluatedParts",
+      "type": "boolean",
+      "label": "Показывать оцениваемую часть на светло-синем фоне",
+      "description": "Показывает в режиме учащегося содержимое между выбранными маркерами на светло-синем фоне до проверки.",
+      "default": false
+    },
+    {
+      "name": "behaviour",
+      "type": "group",
+      "label": "Настройки поведения",
+      "importance": "low",
+      "fields": [
+        {
+          "name": "delimiters",
+          "type": "select",
+          "label": "Маркеры",
+          "description": "Выпадающий список для выбора пары маркеров. Оцениваемый ответ пишется между выбранными маркерами.",
+          "default": "[]",
+          "options": [
+            {
+              "value": "[]",
+              "label": "[ ]  –  [ответ]"
+            },
+            {
+              "value": "{}",
+              "label": "{ }  –  {ответ}"
+            },
+            {
+              "value": "##",
+              "label": "# #  –  #ответ#"
+            },
+            {
+              "value": "@@",
+              "label": "@ @  –  @ответ@"
+            },
+            {
+              "value": "*",
+              "label": "* *  –  *ответ*"
+            }
+          ]
+        },
+        {
+          "name": "optionSeparator",
+          "type": "text",
+          "label": "Разделитель альтернативных ответов",
+          "description": "Используйте его внутри отмеченного ответа, например [кот|собака].",
+          "default": "|",
+          "maxLength": 4,
+          "widget": "textarea"
+        },
+        {
+          "name": "enableRetry",
+          "type": "boolean",
+          "label": "Разрешить повторную попытку",
+          "default": true
+        },
+        {
+          "name": "showCorrectTextAfterCheck",
+          "type": "boolean",
+          "label": "Показывать правильный текст после проверки",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "l10n",
+      "type": "group",
+      "label": "Тексты и переводы",
+      "importance": "low",
+      "common": true,
+      "fields": [
+        {
+          "name": "checkAnswer",
+          "type": "text",
+          "label": "Текст кнопки проверки",
+          "default": "Проверить"
+        },
+        {
+          "name": "tryAgain",
+          "type": "text",
+          "label": "Текст кнопки повторной попытки",
+          "default": "Попробовать ещё раз"
+        },
+        {
+          "name": "correct",
+          "type": "text",
+          "label": "Текст положительной обратной связи",
+          "default": "Правильно"
+        },
+        {
+          "name": "incorrect",
+          "type": "text",
+          "label": "Текст отрицательной обратной связи",
+          "default": "Неправильно"
+        },
+        {
+          "name": "correctFeedback",
+          "type": "text",
+          "label": "Обратная связь при полностью правильном ответе",
+          "default": "Всё правильно!"
+        },
+        {
+          "name": "correctText",
+          "type": "text",
+          "label": "Текст количества правильных",
+          "default": "Правильных: @count",
+          "description": "Доступная переменная: @count."
+        },
+        {
+          "name": "wrongText",
+          "type": "text",
+          "label": "Текст количества неправильных",
+          "default": "Неправильных: @count",
+          "description": "Доступная переменная: @count."
+        },
+        {
+          "name": "missingCountText",
+          "type": "text",
+          "label": "Текст количества пропущенных",
+          "default": "Пропущенных: @count",
+          "description": "Доступная переменная: @count."
+        },
+        {
+          "name": "yourResult",
+          "type": "text",
+          "label": "Текст результата",
+          "default": "Результат: @score / @max",
+          "description": "Доступные переменные: @score и @max."
+        },
+        {
+          "name": "emptyContent",
+          "type": "text",
+          "label": "Сообщение о пустом содержании",
+          "default": "Автор не добавил текст."
+        },
+        {
+          "name": "solutionPrefix",
+          "type": "text",
+          "label": "Префикс правильного ответа",
+          "default": "Правильный ответ:"
+        },
+        {
+          "name": "dragHint",
+          "type": "text",
+          "label": "Подсказка для перетаскивания",
+          "default": ""
+        },
+        {
+          "name": "selectPlaceholder",
+          "type": "text",
+          "label": "Заполнитель выпадающего списка",
+          "default": "выбрать..."
+        },
+        {
+          "name": "emptyGap",
+          "type": "text",
+          "label": "Метка пустого ответа",
+          "default": "пусто"
+        },
+        {
+          "name": "gapLabel",
+          "type": "text",
+          "label": "Метка доступности поля ответа",
+          "default": "Поле ответа @num",
+          "description": "Переменная @num заменяется номером поля."
+        },
+        {
+          "name": "editableLabel",
+          "type": "text",
+          "label": "Метка доступности редактируемого текста",
+          "default": "Редактируемый текст ответа"
+        },
+        {
+          "name": "extraText",
+          "type": "text",
+          "label": "Метка лишнего текста",
+          "default": "Лишний текст"
+        },
+        {
+          "name": "missingText",
+          "type": "text",
+          "label": "Метка отсутствующего текста",
+          "default": "Отсутствующий текст"
+        }
+      ]
+    }
+  ],
+  "libraryStrings": {
+    "title": "Исправление ошибок",
+    "description": "Учащиеся исправляют ошибки непосредственно в тексте."
+  }
+}

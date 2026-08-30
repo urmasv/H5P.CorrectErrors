@@ -1,0 +1,264 @@
+{
+  "semantics": [
+    {
+      "name": "taskDescription",
+      "type": "text",
+      "widget": "html",
+      "label": "Instrucciones para el estudiante",
+      "importance": "high",
+      "default": "Corrige el texto. Si es necesario, sustituye, elimina o añade texto.",
+      "optional": true,
+      "tags": [
+        "p",
+        "br",
+        "strong",
+        "em",
+        "u",
+        "ul",
+        "ol",
+        "li",
+        "a",
+        "span",
+        "sub",
+        "sup"
+      ]
+    },
+    {
+      "name": "correctText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Texto correcto",
+      "importance": "high",
+      "default": "¡Hola, [mundo]! ¿Puedes añadir [espacios]?",
+      "description": "Introduce el texto correcto. Para delimitar el contenido evaluado, usa marcadores, por ejemplo [respuesta], [respuesta|alternativa] o [!!] para una respuesta correcta vacía. Los símbolos de los marcadores no se cuentan como parte de la respuesta correcta."
+    },
+    {
+      "name": "wrongText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Texto con errores mostrado al estudiante",
+      "importance": "high",
+      "default": "¡Hola, [mundo] ¿Puedes añadir [espacio]?",
+      "optional": true
+    },
+    {
+      "name": "specialCharacters",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Caracteres adicionales",
+      "importance": "high",
+      "default": "",
+      "optional": true,
+      "description": "Introduce los caracteres que el estudiante podrá insertar con botones situados encima del área de respuesta. Separa los caracteres con espacios, comas o saltos de línea."
+    },
+    {
+      "name": "scoreMode",
+      "type": "select",
+      "label": "Modo de puntuación",
+      "importance": "high",
+      "default": "fulltext",
+      "description": "Texto completo compara el texto final del estudiante con todo el texto correcto después de eliminar los marcadores. Contenido entre marcadores puntúa solo las partes dentro de los símbolos de marcador seleccionados.",
+      "options": [
+        {
+          "value": "fulltext",
+          "label": "Texto completo"
+        },
+        {
+          "value": "marked",
+          "label": "Contenido entre marcadores [ ]"
+        }
+      ]
+    },
+    {
+      "name": "showEvaluatedParts",
+      "type": "boolean",
+      "label": "Mostrar las partes evaluadas con fondo azul claro",
+      "description": "Muestra el contenido entre los marcadores seleccionados en la vista del estudiante con fondo azul claro antes de comprobar.",
+      "default": false
+    },
+    {
+      "name": "behaviour",
+      "type": "group",
+      "label": "Ajustes de comportamiento",
+      "importance": "low",
+      "fields": [
+        {
+          "name": "delimiters",
+          "type": "select",
+          "label": "Marcadores",
+          "description": "Menú desplegable para elegir el par de marcadores. La respuesta evaluada se escribe entre los marcadores seleccionados.",
+          "default": "[]",
+          "options": [
+            {
+              "value": "[]",
+              "label": "[ ]  –  [respuesta]"
+            },
+            {
+              "value": "{}",
+              "label": "{ }  –  {respuesta}"
+            },
+            {
+              "value": "##",
+              "label": "# #  –  #respuesta#"
+            },
+            {
+              "value": "@@",
+              "label": "@ @  –  @respuesta@"
+            },
+            {
+              "value": "*",
+              "label": "* *  –  *respuesta*"
+            }
+          ]
+        },
+        {
+          "name": "optionSeparator",
+          "type": "text",
+          "label": "Separador de respuestas alternativas",
+          "description": "Úsalo dentro de una respuesta marcada, por ejemplo [gato|perro].",
+          "default": "|",
+          "maxLength": 4,
+          "widget": "textarea"
+        },
+        {
+          "name": "enableRetry",
+          "type": "boolean",
+          "label": "Permitir reintento",
+          "default": true
+        },
+        {
+          "name": "showCorrectTextAfterCheck",
+          "type": "boolean",
+          "label": "Mostrar el texto correcto después de comprobar",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "l10n",
+      "type": "group",
+      "label": "Textos y traducciones",
+      "importance": "low",
+      "common": true,
+      "fields": [
+        {
+          "name": "checkAnswer",
+          "type": "text",
+          "label": "Texto del botón Comprobar",
+          "default": "Comprobar"
+        },
+        {
+          "name": "tryAgain",
+          "type": "text",
+          "label": "Texto del botón Reintentar",
+          "default": "Reintentar"
+        },
+        {
+          "name": "correct",
+          "type": "text",
+          "label": "Texto de retroalimentación correcta",
+          "default": "Correcto"
+        },
+        {
+          "name": "incorrect",
+          "type": "text",
+          "label": "Texto de retroalimentación incorrecta",
+          "default": "Incorrecto"
+        },
+        {
+          "name": "correctFeedback",
+          "type": "text",
+          "label": "Retroalimentación para una respuesta completamente correcta",
+          "default": "¡Todo correcto!"
+        },
+        {
+          "name": "correctText",
+          "type": "text",
+          "label": "Texto del recuento correcto",
+          "default": "Correctas: @count",
+          "description": "Variable disponible: @count."
+        },
+        {
+          "name": "wrongText",
+          "type": "text",
+          "label": "Texto del recuento incorrecto",
+          "default": "Incorrectas: @count",
+          "description": "Variable disponible: @count."
+        },
+        {
+          "name": "missingCountText",
+          "type": "text",
+          "label": "Texto del recuento faltante",
+          "default": "Faltantes: @count",
+          "description": "Variable disponible: @count."
+        },
+        {
+          "name": "yourResult",
+          "type": "text",
+          "label": "Texto del resultado",
+          "default": "Resultado: @score / @max",
+          "description": "Variables disponibles: @score y @max."
+        },
+        {
+          "name": "emptyContent",
+          "type": "text",
+          "label": "Mensaje de contenido vacío",
+          "default": "El autor no ha añadido ningún texto."
+        },
+        {
+          "name": "solutionPrefix",
+          "type": "text",
+          "label": "Prefijo de respuesta correcta",
+          "default": "Respuesta correcta:"
+        },
+        {
+          "name": "dragHint",
+          "type": "text",
+          "label": "Indicación para arrastrar",
+          "default": ""
+        },
+        {
+          "name": "selectPlaceholder",
+          "type": "text",
+          "label": "Marcador de posición del desplegable",
+          "default": "elige..."
+        },
+        {
+          "name": "emptyGap",
+          "type": "text",
+          "label": "Etiqueta de respuesta vacía",
+          "default": "vacío"
+        },
+        {
+          "name": "gapLabel",
+          "type": "text",
+          "label": "Etiqueta de accesibilidad del hueco",
+          "default": "Campo de respuesta @num",
+          "description": "La variable @num se sustituye por el número del hueco."
+        },
+        {
+          "name": "editableLabel",
+          "type": "text",
+          "label": "Etiqueta de accesibilidad del texto editable",
+          "default": "Texto de respuesta editable"
+        },
+        {
+          "name": "extraText",
+          "type": "text",
+          "label": "Etiqueta de texto sobrante",
+          "default": "Texto sobrante"
+        },
+        {
+          "name": "missingText",
+          "type": "text",
+          "label": "Etiqueta de texto faltante",
+          "default": "Texto faltante"
+        }
+      ]
+    }
+  ],
+  "libraryStrings": {
+    "title": "Corregir errores",
+    "description": "Los estudiantes corrigen errores directamente en un texto."
+  }
+}

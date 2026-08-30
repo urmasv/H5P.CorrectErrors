@@ -1,0 +1,264 @@
+{
+  "semantics": [
+    {
+      "name": "taskDescription",
+      "type": "text",
+      "widget": "html",
+      "label": "Instructions for the learner",
+      "importance": "high",
+      "default": "Correct the text. If necessary, replace, delete or add text.",
+      "optional": true,
+      "tags": [
+        "p",
+        "br",
+        "strong",
+        "em",
+        "u",
+        "ul",
+        "ol",
+        "li",
+        "a",
+        "span",
+        "sub",
+        "sup"
+      ]
+    },
+    {
+      "name": "correctText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Correct text",
+      "importance": "high",
+      "default": "Hello, [world]! Can you add [spaces]?",
+      "description": "Enter the correct text. To mark content for scoring, use markers, e.g. [answer], [answer|alternative] or [!!] for an empty correct answer. The marker symbols are not counted as part of the correct answer."
+    },
+    {
+      "name": "wrongText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Text with errors shown to the learner",
+      "importance": "high",
+      "default": "Hello, [world] Can you add [space]?",
+      "optional": true
+    },
+    {
+      "name": "specialCharacters",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Additional characters",
+      "importance": "high",
+      "default": "",
+      "optional": true,
+      "description": "Enter characters that learners can insert with buttons above the answer area. Separate characters with spaces, commas or line breaks."
+    },
+    {
+      "name": "scoreMode",
+      "type": "select",
+      "label": "Scoring mode",
+      "importance": "high",
+      "default": "fulltext",
+      "description": "Whole text compares the learner’s final text with the complete correct text after markers are removed. Content between markers scores only the parts inside the selected marker symbols.",
+      "options": [
+        {
+          "value": "fulltext",
+          "label": "Whole text"
+        },
+        {
+          "value": "marked",
+          "label": "Content between markers [ ]"
+        }
+      ]
+    },
+    {
+      "name": "showEvaluatedParts",
+      "type": "boolean",
+      "label": "Show evaluated parts with a light blue background",
+      "description": "Show the content between the selected markers in the learner view with a light blue background before checking.",
+      "default": false
+    },
+    {
+      "name": "behaviour",
+      "type": "group",
+      "label": "Behaviour settings",
+      "importance": "low",
+      "fields": [
+        {
+          "name": "delimiters",
+          "type": "select",
+          "label": "Markers",
+          "description": "Dropdown for choosing the marker pair. Write the scored answer between the selected markers.",
+          "default": "[]",
+          "options": [
+            {
+              "value": "[]",
+              "label": "[ ]  –  [answer]"
+            },
+            {
+              "value": "{}",
+              "label": "{ }  –  {answer}"
+            },
+            {
+              "value": "##",
+              "label": "# #  –  #answer#"
+            },
+            {
+              "value": "@@",
+              "label": "@ @  –  @answer@"
+            },
+            {
+              "value": "*",
+              "label": "* *  –  *answer*"
+            }
+          ]
+        },
+        {
+          "name": "optionSeparator",
+          "type": "text",
+          "label": "Alternative answer separator",
+          "description": "Use this inside a marked answer, e.g. [cat|dog].",
+          "default": "|",
+          "maxLength": 4,
+          "widget": "textarea"
+        },
+        {
+          "name": "enableRetry",
+          "type": "boolean",
+          "label": "Allow retry",
+          "default": true
+        },
+        {
+          "name": "showCorrectTextAfterCheck",
+          "type": "boolean",
+          "label": "Show the correct text after checking",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "l10n",
+      "type": "group",
+      "label": "Texts and translations",
+      "importance": "low",
+      "common": true,
+      "fields": [
+        {
+          "name": "checkAnswer",
+          "type": "text",
+          "label": "Check button label",
+          "default": "Check"
+        },
+        {
+          "name": "tryAgain",
+          "type": "text",
+          "label": "Retry button label",
+          "default": "Try again"
+        },
+        {
+          "name": "correct",
+          "type": "text",
+          "label": "Correct feedback text",
+          "default": "Correct"
+        },
+        {
+          "name": "incorrect",
+          "type": "text",
+          "label": "Incorrect feedback text",
+          "default": "Incorrect"
+        },
+        {
+          "name": "correctFeedback",
+          "type": "text",
+          "label": "Feedback for a completely correct answer",
+          "default": "Everything is correct!"
+        },
+        {
+          "name": "correctText",
+          "type": "text",
+          "label": "Correct count text",
+          "default": "Correct: @count",
+          "description": "Available variable: @count."
+        },
+        {
+          "name": "wrongText",
+          "type": "text",
+          "label": "Wrong count text",
+          "default": "Wrong: @count",
+          "description": "Available variable: @count."
+        },
+        {
+          "name": "missingCountText",
+          "type": "text",
+          "label": "Missing count text",
+          "default": "Missing: @count",
+          "description": "Available variable: @count."
+        },
+        {
+          "name": "yourResult",
+          "type": "text",
+          "label": "Result text",
+          "default": "Result: @score / @max",
+          "description": "Available variables: @score and @max."
+        },
+        {
+          "name": "emptyContent",
+          "type": "text",
+          "label": "Empty content message",
+          "default": "The author has not added any text."
+        },
+        {
+          "name": "solutionPrefix",
+          "type": "text",
+          "label": "Correct answer label prefix",
+          "default": "Correct answer:"
+        },
+        {
+          "name": "dragHint",
+          "type": "text",
+          "label": "Drag/drop hint",
+          "default": ""
+        },
+        {
+          "name": "selectPlaceholder",
+          "type": "text",
+          "label": "Dropdown placeholder",
+          "default": "choose..."
+        },
+        {
+          "name": "emptyGap",
+          "type": "text",
+          "label": "Empty answer label",
+          "default": "empty"
+        },
+        {
+          "name": "gapLabel",
+          "type": "text",
+          "label": "Gap accessibility label",
+          "default": "Answer field @num",
+          "description": "The variable @num is replaced by the gap number."
+        },
+        {
+          "name": "editableLabel",
+          "type": "text",
+          "label": "Editable text accessibility label",
+          "default": "Editable answer text"
+        },
+        {
+          "name": "extraText",
+          "type": "text",
+          "label": "Extra text marker label",
+          "default": "Extra text"
+        },
+        {
+          "name": "missingText",
+          "type": "text",
+          "label": "Missing text marker label",
+          "default": "Missing text"
+        }
+      ]
+    }
+  ],
+  "libraryStrings": {
+    "title": "Correct Errors",
+    "description": "Learners directly correct errors in a text."
+  }
+}

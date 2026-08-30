@@ -1,0 +1,264 @@
+{
+  "semantics": [
+    {
+      "name": "taskDescription",
+      "type": "text",
+      "widget": "html",
+      "label": "Juhis õppijale",
+      "importance": "high",
+      "default": "Paranda tekst. Vajaduse korral asenda, kustuta või lisa teksti.",
+      "optional": true,
+      "tags": [
+        "p",
+        "br",
+        "strong",
+        "em",
+        "u",
+        "ul",
+        "ol",
+        "li",
+        "a",
+        "span",
+        "sub",
+        "sup"
+      ]
+    },
+    {
+      "name": "correctText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Õige tekst",
+      "importance": "high",
+      "default": "Tere, [maailm]! Kas oskad lisada [tühikuid]?",
+      "description": "Sisesta õige tekst. Hinnatava sisu piiritlemiseks kasuta markereid, nt [vastus], [vastus|alternatiiv] või [!!] tühja õige vastuse jaoks. Markeri sümboleid ei arvestata õige vastuse osaks."
+    },
+    {
+      "name": "wrongText",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Vastajale kuvatav vigadega tekst",
+      "importance": "high",
+      "default": "Tere, [maailm] Kas oskad lisada [tühikud]?",
+      "optional": true
+    },
+    {
+      "name": "specialCharacters",
+      "type": "text",
+      "widget": "textarea",
+      "label": "Lisamärgid",
+      "importance": "high",
+      "default": "",
+      "optional": true,
+      "description": "Sisesta märgid, mida vastaja saab vastaja vaates teksti kohal olevate klahvidega lisada. Eralda märgid tühikute, komade või reavahetustega."
+    },
+    {
+      "name": "scoreMode",
+      "type": "select",
+      "label": "Hindamisviis",
+      "importance": "high",
+      "default": "fulltext",
+      "description": "Kogu teksti korral võrreldakse õppija lõplikku teksti kogu õige tekstiga pärast markerite eemaldamist. Markerite vaheline osa hindab ainult valitud markerite sees olevaid osi.",
+      "options": [
+        {
+          "value": "fulltext",
+          "label": "Kogu tekst"
+        },
+        {
+          "value": "marked",
+          "label": "Markerite [ ] vaheline osa"
+        }
+      ]
+    },
+    {
+      "name": "showEvaluatedParts",
+      "type": "boolean",
+      "label": "Kuva hinnatav osa helesinise taustaga",
+      "description": "Kuvab vastaja vaates valitud markerite vahelise hinnatava osa enne kontrollimist helesinise taustaga.",
+      "default": false
+    },
+    {
+      "name": "behaviour",
+      "type": "group",
+      "label": "Käitumisseaded",
+      "importance": "low",
+      "fields": [
+        {
+          "name": "delimiters",
+          "type": "select",
+          "label": "Markerid",
+          "description": "Rippmenüü markeripaari valimiseks. Valitud markerite vahele kirjutatakse hinnatav vastus.",
+          "default": "[]",
+          "options": [
+            {
+              "value": "[]",
+              "label": "[ ]  –  [vastus]"
+            },
+            {
+              "value": "{}",
+              "label": "{ }  –  {vastus}"
+            },
+            {
+              "value": "##",
+              "label": "# #  –  #vastus#"
+            },
+            {
+              "value": "@@",
+              "label": "@ @  –  @vastus@"
+            },
+            {
+              "value": "*",
+              "label": "* *  –  *vastus*"
+            }
+          ]
+        },
+        {
+          "name": "optionSeparator",
+          "type": "text",
+          "label": "Alternatiivsete vastuste eraldaja",
+          "description": "Kasuta seda märgitud vastuse sees, nt [kass|koer].",
+          "default": "|",
+          "maxLength": 4,
+          "widget": "textarea"
+        },
+        {
+          "name": "enableRetry",
+          "type": "boolean",
+          "label": "Luba uuesti proovimine",
+          "default": true
+        },
+        {
+          "name": "showCorrectTextAfterCheck",
+          "type": "boolean",
+          "label": "Kuva pärast kontrollimist õige tekst",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "l10n",
+      "type": "group",
+      "label": "Tekstid ja tõlked",
+      "importance": "low",
+      "common": true,
+      "fields": [
+        {
+          "name": "checkAnswer",
+          "type": "text",
+          "label": "Kontrolli nupu tekst",
+          "default": "Kontrolli"
+        },
+        {
+          "name": "tryAgain",
+          "type": "text",
+          "label": "Proovi uuesti nupu tekst",
+          "default": "Proovi uuesti"
+        },
+        {
+          "name": "correct",
+          "type": "text",
+          "label": "Õige tagasiside tekst",
+          "default": "Õige"
+        },
+        {
+          "name": "incorrect",
+          "type": "text",
+          "label": "Vale tagasiside tekst",
+          "default": "Vale"
+        },
+        {
+          "name": "correctFeedback",
+          "type": "text",
+          "label": "Tagasiside täiesti õige vastuse korral",
+          "default": "Kõik õige!"
+        },
+        {
+          "name": "correctText",
+          "type": "text",
+          "label": "Õigete arvu tekst",
+          "default": "Õigeid: @count",
+          "description": "Kasutatav muutuja: @count."
+        },
+        {
+          "name": "wrongText",
+          "type": "text",
+          "label": "Valede arvu tekst",
+          "default": "Valesid: @count",
+          "description": "Kasutatav muutuja: @count."
+        },
+        {
+          "name": "missingCountText",
+          "type": "text",
+          "label": "Puuduvate arvu tekst",
+          "default": "Puuduvaid: @count",
+          "description": "Kasutatav muutuja: @count."
+        },
+        {
+          "name": "yourResult",
+          "type": "text",
+          "label": "Tulemuse tekst",
+          "default": "Tulemus: @score / @max",
+          "description": "Kasutatavad muutujad: @score ja @max."
+        },
+        {
+          "name": "emptyContent",
+          "type": "text",
+          "label": "Tühja sisu teade",
+          "default": "Autor ei ole lisanud ühtegi teksti."
+        },
+        {
+          "name": "solutionPrefix",
+          "type": "text",
+          "label": "Õige vastuse sildi algus",
+          "default": "Õige vastus:"
+        },
+        {
+          "name": "dragHint",
+          "type": "text",
+          "label": "Lohistamise juhis",
+          "default": ""
+        },
+        {
+          "name": "selectPlaceholder",
+          "type": "text",
+          "label": "Rippmenüü kohatäide",
+          "default": "vali..."
+        },
+        {
+          "name": "emptyGap",
+          "type": "text",
+          "label": "Tühja vastuse silt",
+          "default": "tühi"
+        },
+        {
+          "name": "gapLabel",
+          "type": "text",
+          "label": "Lünga ligipääsetavuse silt",
+          "default": "Vastuseväli @num",
+          "description": "Muutuja @num asendatakse lünga järjekorranumbriga."
+        },
+        {
+          "name": "editableLabel",
+          "type": "text",
+          "label": "Muudetava teksti ligipääsetavuse silt",
+          "default": "Muudetav vastusetekst"
+        },
+        {
+          "name": "extraText",
+          "type": "text",
+          "label": "Liigse teksti markeri silt",
+          "default": "Liigne tekst"
+        },
+        {
+          "name": "missingText",
+          "type": "text",
+          "label": "Puuduva teksti markeri silt",
+          "default": "Puuduv tekst"
+        }
+      ]
+    }
+  ],
+  "libraryStrings": {
+    "title": "Paranda tekst",
+    "description": "Õppija parandab tekstis olevad vead otse teksti muutes."
+  }
+}
