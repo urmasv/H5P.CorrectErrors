@@ -1,6 +1,10 @@
 (function (H5P) {
   'use strict';
 
+  // xAPI fill-in aruande vorming (mod_hvp / h5p-php-report FillInProcessor).
+  var XAPI_FILL_IN_PLACEHOLDER = '__________';
+  var XAPI_RESPONSES_SEPARATOR = '[,]';
+
   var DEFAULT_L10N = {
     checkAnswer: 'Check',
     tryAgain: 'Try again',
@@ -209,7 +213,7 @@
     var statementResult;
 
     result = result || this.lastResult || evaluate(this, false);
-    event = this.createXAPIEvent('answered');
+    event = this.createXAPIEvent('answered', result);
 
     if (!event || !event.data || !event.data.statement) {
       return null;
@@ -220,7 +224,7 @@
     }
 
     statementResult = event.data.statement.result = event.data.statement.result || {};
-    statementResult.response = this.getXAPIResponse();
+    statementResult.response = this.getXAPIResponse(result);
     statementResult.completion = true;
     statementResult.success = !!result.success;
     statementResult.score = statementResult.score || {};
@@ -232,7 +236,7 @@
     return event;
   };
 
-  CorrectErrors.prototype.createXAPIEvent = function (verb) {
+  CorrectErrors.prototype.createXAPIEvent = function (verb, result) {
     var event;
     var definition;
 
@@ -255,41 +259,98 @@
       definition = event.data.statement.object.definition = event.data.statement.object.definition || {};
     }
 
-    extendObject(definition, this.getxAPIDefinition());
+    extendObject(definition, this.getxAPIDefinition(result));
 
     return event;
   };
 
-  CorrectErrors.prototype.getxAPIDefinition = function () {
+  CorrectErrors.prototype.getxAPIDefinition = function (result) {
     var languageTag = this.getLanguageTag();
     var definition = {
       name: {},
       description: {},
       type: 'http://adlnet.gov/expapi/activities/cmi.interaction',
       interactionType: 'fill-in',
-      correctResponsesPattern: this.getXAPICorrectResponsesPattern()
+      correctResponsesPattern: this.getXAPICorrectResponsesPattern(result)
     };
 
     definition.name[languageTag] = this.getTitle();
     definition.name['en-US'] = definition.name[languageTag];
-    definition.description[languageTag] = this.getDescription();
+    definition.description[languageTag] = this.getXAPIReportDescription(result);
     definition.description['en-US'] = definition.description[languageTag];
 
     return definition;
   };
 
-  CorrectErrors.prototype.getXAPICorrectResponsesPattern = function () {
-    return [getDisplayCorrectText(this)];
+  /**
+   * Aruande kirjeldus: ülesande juhend ja õige tekst, kus iga märgitud osa on
+   * asendatud xAPI fill-in kohatäitjaga (10 alakriipsu). Ilma märgisteta sisu
+   * puhul on kogu tekst üks hinnatav osa ja seega üks kohatäitja.
+   */
+  CorrectErrors.prototype.getXAPIReportDescription = function (result) {
+    var report = getXAPIReportData(this, result);
+    var task = stripHtml(this.params.taskDescription || '').replace(/\s+/g, ' ').trim();
+    var html = task ? '<p>' + escapeHtml(task) + '</p>' : '';
+    var text = '';
+
+    if (!report.parsed) {
+      return html + '<p>' + XAPI_FILL_IN_PLACEHOLDER + '</p>';
+    }
+
+    report.parsed.segments.forEach(function (segment) {
+      text += segment.type === 'text' ? escapeHtml(segment.text) : XAPI_FILL_IN_PLACEHOLDER;
+    });
+    text.split(/\r?\n/).forEach(function (line) {
+      html += '<p>' + line + '</p>';
+    });
+
+    return html;
   };
 
-  CorrectErrors.prototype.getXAPIResponse = function () {
-    if (!this.wrapper) {
-      return '';
+  CorrectErrors.prototype.getXAPICorrectResponsesPattern = function (result) {
+    var report = getXAPIReportData(this, result);
+    var gapAnswers;
+    var rowCount = 1;
+    var rows = [];
+    var row;
+
+    if (!report.parsed) {
+      return [report.expectedText];
     }
-    if (this.params.mode === 'freeedit') {
-      return stripAuthorMarkers(this, getFreeEditResponse(this));
+
+    // Lünga alternatiivid jaotatakse ridadeks: rida j sisaldab iga lünga
+    // j-ndat alternatiivi (või viimast). Aruanne koondab read lünga kaupa,
+    // seega kombinatsioonide korrutist ei teki.
+    gapAnswers = report.parsed.gaps.map(function (gap) {
+      return gap.answers && gap.answers.length ? gap.answers : [''];
+    });
+    gapAnswers.forEach(function (answers) {
+      rowCount = Math.max(rowCount, answers.length);
+    });
+    for (row = 0; row < rowCount; row++) {
+      rows.push(gapAnswers.map(function (answers) {
+        return String(answers[Math.min(row, answers.length - 1)] || '');
+      }).join(XAPI_RESPONSES_SEPARATOR));
     }
-    return getGapResponses(this).join('[,]');
+
+    return rows;
+  };
+
+  /**
+   * Õpilase vastus märgitud osade kaupa. Väärtused võetakse hindamise
+   * tulemusest, mitte DOM-ist: pärast kontrollimist on DOM-is võrdluse kuva
+   * (liigsed ja puuduvad märgid koos), mitte õpilase sisestatud tekst.
+   */
+  CorrectErrors.prototype.getXAPIResponse = function (result) {
+    var report = getXAPIReportData(this, result);
+
+    if (!report.parsed) {
+      return report.userText;
+    }
+
+    return report.parsed.gaps.map(function (gap, index) {
+      return String(report.values[index] || '');
+    }).join(XAPI_RESPONSES_SEPARATOR);
   };
 
   CorrectErrors.prototype.getTitle = function () {
@@ -909,11 +970,13 @@
     var score = 0;
     var missing = 0;
     var incorrect = 0;
+    var gapValues = [];
 
     Array.prototype.forEach.call(marked, function (span) {
       var index = parseInt(span.getAttribute('data-index'), 10);
       var value = getTextContent(span);
       var correct = isCorrectAnswer(self, value, self.correct.gaps[index].answers);
+      gapValues[index] = value;
       span.setAttribute('data-correct', correct ? 'true' : 'false');
       span.setAttribute('data-user', value);
       span.setAttribute('data-expected', firstVisibleAnswer(self.correct.gaps[index].answers));
@@ -932,6 +995,8 @@
       score: score,
       maxScore: Math.max(marked.length, 1),
       success: score === Math.max(marked.length, 1),
+      gapValues: gapValues,
+      reportParsed: self.correct,
       details: {
         correct: score,
         incorrect: incorrect,
@@ -968,6 +1033,8 @@
         success: correct && unitAssessment.correct === unitAssessment.total && unitAssessment.missing === 0 && unitAssessment.incorrect === 0,
         userText: learnerText,
         expectedText: expectedText,
+        gapValues: unitAssessment.values,
+        reportParsed: unitAssessment.parsed,
         details: {
           correct: unitAssessment.correct,
           incorrect: unitAssessment.incorrect + (correct ? 0 : unitAssessment.staticErrors),
@@ -1834,7 +1901,9 @@
       correct: correct,
       missing: missing,
       incorrect: incorrect,
-      staticErrors: extraction.staticErrors || 0
+      staticErrors: extraction.staticErrors || 0,
+      values: extraction.values,
+      parsed: parsed
     };
   }
 
@@ -2674,6 +2743,34 @@
       return document.createElement('div');
     }
     return $container.jquery ? $container.get(0) : $container;
+  }
+
+  /**
+   * xAPI aruande andmed hindamise tulemusest. Aruanne näitab alati märgitud
+   * osi: parsed on hindamisel kasutatud märgistusstruktuur ja values õpilase
+   * väärtused märgitud osade kaupa. Kui kogu teksti hindamisel märgitud osi
+   * õpilase tekstist leida ei õnnestunud, jäävad väärtused tühjaks. Kui sisus
+   * märgiseid pole, on parsed null ja aruanne näitab kogu teksti ühe osana.
+   */
+  function getXAPIReportData(self, result) {
+    var parsed = result && result.reportParsed && result.reportParsed.gaps && result.reportParsed.gaps.length
+      ? result.reportParsed
+      : (self.correct && self.correct.gaps && self.correct.gaps.length ? self.correct : null);
+
+    return {
+      parsed: parsed,
+      values: result && result.gapValues ? result.gapValues : [],
+      userText: stripAuthorMarkers(self, result && result.userText ? result.userText : ''),
+      expectedText: stripAuthorMarkers(self, result && result.expectedText ? result.expectedText : getDisplayCorrectText(self))
+    };
+  }
+
+  function escapeHtml(text) {
+    return String(text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   function emitXAPIResult(self, result) {
